@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 5000;
 app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
     "*",
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "https://sirohi-computer.vercel.app"
   ];
 app.use(
     cors({
@@ -23,9 +24,7 @@ app.use(
 
 
 app.get("/", async(req,res)=>{
-    // res.send("Root")
-    let stud = await Student.find();
-    res.send(stud);
+    res.send("Aman Sirohi")
 });
 
 
