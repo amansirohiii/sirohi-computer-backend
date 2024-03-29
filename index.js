@@ -62,7 +62,6 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
   });
   const storage = multer.diskStorage({});
-
   const upload = multer({ storage: storage });
 
 
@@ -80,9 +79,12 @@ cloudinary.config({
         mother_name,
         address,
         admission_date,
-        course_completion_date
+        course_completion_date,
+        password
       } = req.body;
-
+      if(password !== process.env.PASSWORD){
+        return res.status(401).redirect('/');
+        }
       const result = await cloudinary.uploader.upload(req.file.path);
         const imageUrl = result.public_id;
 
