@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+</head>
+<body>
+    <h1>Student Registration Form</h1>
+    <form action="/register" method="POST" enctype="multipart/form-data">
+        <label for="registration_no">Registration Number:</label>
+        <input type="text" id="registration_no" name="registration_no" required><br>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="course_name">Course Name:</label>
+        <input type="text" id="course_name" name="course_name" required><br>
+
+        <label for="date_of_birth">Date of Birth:</label>
+        <input type="date" id="date_of_birth" name="date_of_birth" required><br>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select><br>
+
+        <label for="father_name">Father's Name:</label>
+        <input type="text" id="father_name" name="father_name" required><br>
+
+        <label for="mother_name">Mother's Name:</label>
+        <input type="text" id="mother_name" name="mother_name" required><br>
+
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" required></textarea><br>
+
+        <label for="admission_date">Admission Date:</label>
+        <input type="date" id="admission_date" name="admission_date" required><br>
+
+        <label for="course_completion_date">Course Completion Date:</label>
+        <input type="date" id="course_completion_date" name="course_completion_date" required><br>
+
+        <label for="image">Upload Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

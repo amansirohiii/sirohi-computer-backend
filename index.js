@@ -3,9 +3,20 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import Student from "./models/student.js";
 import cors from "cors";
+import Multer from 'multer';
+// import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import { v2 as cloudinary } from 'cloudinary';
+import path from 'path';
+import { fileURLToPath } from "url";
+
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
     "*",
@@ -23,9 +34,9 @@ app.use(
 
 
 
-app.get("/", async(req,res)=>{
-    res.send("Aman Sirohi")
-});
+  app.get('/', (req, res) => {
+    res.render('index');
+  });
 
 
 
@@ -43,6 +54,59 @@ app.get("/student/:rn", async(req, res) => {
 
 
 app.listen(PORT, ()=> console.log(`listening on port ${PORT}`));
+
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+  });
+  const storage = new Multer.memoryStorage();
+  const upload = Multer({
+    storage,
+  });
+
+
+  app.post('/register', upload.single('image'), async (req, res) => {
+    try {
+      const {
+        registration_no,
+        name,
+        course_name,
+        date_of_birth,
+        gender,
+        father_name,
+        mother_name,
+        address,
+        admission_date,
+        course_completion_date
+      } = req.body;
+
+      const imageUrl = req.file.path;
+
+      const student = new Student({
+        registration_no,
+        name,
+        course_name,
+        date_of_birth,
+        gender,
+        father_name,
+        mother_name,
+        address,
+        admission_date,
+        course_completion_date,
+        image_url: imageUrl
+      });
+
+      await student.save();
+      res.status(201).send('Student registered successfully');
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error registering student');
+    }
+  });
+
+
 
 const connectDB= async()=>{
     try{
