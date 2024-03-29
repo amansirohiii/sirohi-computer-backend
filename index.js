@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import Student from "./models/student.js";
 import cors from "cors";
-import Multer from 'multer';
+import multer from 'multer';
 // import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import { v2 as cloudinary } from 'cloudinary';
 import path from 'path';
@@ -61,10 +61,8 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
   });
-  const storage = new Multer.memoryStorage();
-  const upload = Multer({
-    storage,
-  });
+  const upload = multer({ dest: 'uploads/' }); // Temporary storage for uploaded files
+
 
 
   app.post('/register', upload.single('image'), async (req, res) => {
@@ -82,7 +80,8 @@ cloudinary.config({
         course_completion_date
       } = req.body;
 
-      const imageUrl = req.file.path;
+      const result = await cloudinary.uploader.upload(req.file.path);
+        const imageUrl = result.public_id;
 
       const student = new Student({
         registration_no,
@@ -110,7 +109,7 @@ cloudinary.config({
 
 const connectDB= async()=>{
     try{
-        const connectionInstance = await mongoose.connect(`mongodb+srv://amansirohi:${process.env.DB_PASSWORD}@cluster0.bsek6wa.mongodb.net/students_data`);
+        const connectionInstance = await mongoose.connect(`mongodb+srv://amansirohi:${process.env.DB_PASSWORD}@cluster0.bsek6wa.mongodb.net/students_data`, { useNewUrlParser: true, useUnifiedTopology: true });
         console.log("DB Connected", connectionInstance.connection.host)
     }
     catch(err){
