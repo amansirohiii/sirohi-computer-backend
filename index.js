@@ -59,7 +59,7 @@ const storage = multer.diskStorage({});
 const upload = multer({ storage: storage });
 
 // Certificate template path
-const certificateTemplatePath = 'https://drive.google.com/file/d/1ZuOS-ihhVN29QFTD5D_sLjkPiwcfRvfW/view?usp=sharing'; // Path to certificate template
+const certificateTemplatePath = 'https://2bugkb15ocixp6cf.public.blob.vercel-storage.com/certificate-Valp88q4lHUHERNLhDzofRtB7r66MT.pdf'; // Path to certificate template
 
 // Generate certificate function
 async function generateCertificate(name, registration_no) {
