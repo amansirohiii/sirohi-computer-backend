@@ -59,7 +59,7 @@ const storage = multer.diskStorage({});
 const upload = multer({ storage: storage });
 
 // Certificate template path
-const certificateTemplatePath = 'https://res.cloudinary.com/dxqwqe7me/image/upload/v1711871340/emte3vc0ydhuwwfd7y3t.pdf'; // Path to certificate template
+const certificateTemplatePath = 'https://drive.google.com/file/d/1ZuOS-ihhVN29QFTD5D_sLjkPiwcfRvfW/view?usp=sharing'; // Path to certificate template
 
 // Generate certificate function
 async function generateCertificate(name, registration_no) {
