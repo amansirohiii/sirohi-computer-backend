@@ -64,9 +64,11 @@ const certificateTemplatePath = 'https://2bugkb15ocixp6cf.public.blob.vercel-sto
 // Generate certificate function
 async function generateCertificate(name, registration_no) {
     try {
-        const existingPdfBytes = fs.readFileSync(certificateTemplatePath);
+        const response = await axios.get(certificateTemplatePath, {
+            responseType: 'arraybuffer' // Specify responseType as 'arraybuffer' to get binary data
+        });
+        const existingPdfBytes = response.data;
         const pdfDoc = await PDFDocument.load(existingPdfBytes);
-        const page = pdfDoc.getPage(0);
 
         // Insert student's details into the certificate
         page.drawText(name, { x: 100, y: 280, size: 30 });
