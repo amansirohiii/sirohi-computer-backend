@@ -11,7 +11,8 @@ const studentSchema = new mongoose.Schema({
     address: { type: String, required: true },
     admission_date: { type: String, required: true },
     course_completion_date: { type: String, required: true },
-    image_url: { type: String, required: true }
+    image_url: { type: String, required: true },
+    certificate_url: { type: String, required: true }
 }, {timestamps: true});
 
 
