@@ -59,7 +59,7 @@ const storage = multer.diskStorage({});
 const upload = multer({ storage: storage });
 
 // Certificate template path
-const certificateTemplatePath = 'uploads/certificate.pdf'; // Path to certificate template
+const certificateTemplatePath = 'https://res.cloudinary.com/dxqwqe7me/image/upload/v1711871340/emte3vc0ydhuwwfd7y3t.pdf'; // Path to certificate template
 
 // Generate certificate function
 async function generateCertificate(name, registration_no) {
@@ -94,14 +94,8 @@ async function generateCertificate(name, registration_no) {
     }
 }
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error('Error occurred:', err); // Log the error
-    res.status(500).send('Internal Server Error'); // Send a generic error response
-});
-
 // Route to register student
-app.post('/register', upload.single('image'), async (req, res, next) => {
+app.post('/register', upload.single('image'), async (req, res) => {
     try {
         const {
             registration_no,
@@ -120,12 +114,13 @@ app.post('/register', upload.single('image'), async (req, res, next) => {
         if (password !== process.env.PASSWORD) {
             return res.status(401).redirect('/');
         }
-
-        // Generate certificate
-        const certificateBytes = await generateCertificate(name, registration_no);
+  // Generate certificate
+  const certificateBytes = await generateCertificate(name, registration_no);
         // Upload image to Cloudinary
         const imageResult = await cloudinary.uploader.upload(req.file.path);
         const imageUrl = imageResult.public_id;
+
+
 
         // Upload certificate to Cloudinary
         const certificateResult = await cloudinary.uploader.upload_stream({ resource_type: 'raw' }, async (error, result) => {
@@ -161,19 +156,20 @@ app.post('/register', upload.single('image'), async (req, res, next) => {
 
 app.get('/', (req, res) => {
     res.render('index');
-});
+  });
 
 app.get("/student/:rn", async(req, res) => {
     const { rn } = req.params;
 
-    try {
-        let student = await Student.find({registration_no: rn});
-        res.json(student[0]);
-    } catch (err) {
-        console.log(err);
-        res.send("error occurred in DB");
-    }
-});
+        try {
+            let student = await Student.find({registration_no: rn});
+            res.json(student[0]);
+        } catch (err) {
+          console.log(err);
+          res.send("error occured in DB");
+        }
+      });
+
 
 // Start the server
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
