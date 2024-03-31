@@ -174,7 +174,7 @@ app.post("/register", upload.single("image"), async (req, res) => {
     const certificateBytes = await generateCertificate(name, registration_no, imageResult.secure_url);
     // Upload certificate to Cloudinary
     const certificateResult = await cloudinary.uploader
-      .upload({ resource_type: "auto" }, async (error, result) => {
+      .upload_stream({ resource_type: "auto" }, async (error, result) => {
         if (error) {
           console.error("Error uploading certificate to Cloudinary:", error);
           throw error;
