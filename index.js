@@ -10,6 +10,7 @@ import { fileURLToPath } from "url";
 import { PDFDocument, rgb } from 'pdf-lib';
 import fs from 'fs';
 import QRCode from 'qrcode';
+import axios from "axios";
 
 dotenv.config();
 const app = express();
