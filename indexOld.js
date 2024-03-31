@@ -114,7 +114,7 @@ cloudinary.config({
 
 const connectDB= async()=>{
     try{
-        const connectionInstance = await mongoose.connect(`mongodb+srv://amansirohi:${process.env.DB_PASSWORD}@cluster0.bsek6wa.mongodb.net/students_data`, { useNewUrlParser: true, useUnifiedTopology: true });
+        const connectionInstance = await mongoose.connect(`mongodb+srv://amansirohi:${process.env.DB_PASSWORD}@cluster0.bsek6wa.mongodb.net/students_data`);
         console.log("DB Connected", connectionInstance.connection.host)
     }
     catch(err){
