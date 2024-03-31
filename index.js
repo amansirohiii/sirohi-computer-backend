@@ -70,6 +70,7 @@ async function generateCertificate(name, registration_no) {
         });
         const existingPdfBytes = response.data;
         const pdfDoc = await PDFDocument.load(existingPdfBytes);
+        const page = pdfDoc.getPage(0);
 
         // Insert student's details into the certificate
         page.drawText(name, { x: 100, y: 280, size: 30 });
