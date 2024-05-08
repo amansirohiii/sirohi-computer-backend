@@ -81,12 +81,11 @@ async function generateCertificate(name, registration_no, imageUrl) {
     const qrCodeUrl = `https://sirohi-computer.vercel.app/student/${registration_no}`;
     const qrCodeBuffer = await QRCode.toBuffer(qrCodeUrl);
     const qrCodeImage = await pdfDoc.embedPng(qrCodeBuffer);
-    const qrCodeDims = qrCodeImage.scale(0.6);
     page.drawImage(qrCodeImage, {
       x: 400,
       y: 50,
-      width: qrCodeDims.width,
-      height: qrCodeDims.height,
+      width: qrCodeImage.width,
+      height: qrCodeImage.height,
     });
 
     // Embed student image into the certificate
