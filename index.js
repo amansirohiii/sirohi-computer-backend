@@ -125,11 +125,12 @@ async function generateCertificate(name, registration_no, imageUrl) {
         image = await pdfDoc.embedJpg(imageResponse.data);
     }
 
+    const imageDims = image.scale(0.08);
     page.drawImage(image, {
         x: 50,
         y: 50,
-        width: image.width,
-        height: image.height,
+        width: imageDims.width,
+        height: imageDims.height,
     });
 
 
